@@ -167,3 +167,26 @@ jobs:
           shared-key: full-build-cache
       - name: Run code quality assurance check (${{ matrix.tool }})
         run: ${{ matrix.cmd-check }}
+
+  publish-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Rust
+        run: |
+          rustup set profile minimal
+          rustup toolchain install stable
+          rustup override set stable
+      - name: Print environment info
+        run: |
+          rustc --version --verbose
+          cargo --version
+          rustup --version
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: full-build-cache
+      - name: Run dry-run checks
+        run: |
+          cargo publish --dry-run --verbose
