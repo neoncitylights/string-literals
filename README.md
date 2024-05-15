@@ -1,56 +1,27 @@
-# Rust Repository Template 🦀
+# string-literals
 
-Repository template to get quickly started with writing Rust libraries, ready for distributing.
+[![License](https://img.shields.io/badge/License-MIT%20%26%20Apache%202.0-blue?style=flat-square)](#license)
+[![CI](https://img.shields.io/github/deployments/neoncitylights/string-literals/github-pages?label=deploy&style=flat-square)](https://github.com/neoncitylights/string-literals/actions/workflows/main.yml)
+[![Security audit](https://img.shields.io/github/actions/workflow/status/neoncitylights/string-literals/.github/workflows/main.yml?style=flat-square)](https://github.com/neoncitylights/string-literals/actions/workflows/security-audit.yml)
+[![Codecov](https://img.shields.io/codecov/c/github/neoncitylights/string-literals?style=flat-square&logo=codecov&logoColor=%23fff)](https://codecov.io/gh/neoncitylights/string-literals)
 
-## Getting started
+A crate with Rust macros to more easily create String types.
 
-Open your favorite terminal and clone this locally.
+## Install
 
-- With the [GitHub CLI](https://cli.github.com/): Use the command below. Replace `<project>` with what you'd like to call your project.
-   ```shell
-   gh repo create <project> --template neoncitylights/rust
-   ```
-- With the GitHub UI: You can create a new repository based on this template by clicking the "Use this template" button in the top-right corner of this page.
+```shell
+cargo add string-literals
+```
 
-### Replace placeholders
+## License
 
-Replace the following placeholders with your editor's find-and-replace:
+Licensed under either of
 
-- `{{library}}` - The name of the library.
-- `{{desc}}` - The description of the library.
-- `{{author}}` - The author's name of the library. For example, this could be a username, nickname, or real name.
-- `{{email}}` - The author's email address. This is optional and can be deleted.
+- Apache License, Version 2.0 ([`LICENSE-APACHE`](LICENSE-APACHE) or <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT license ([`LICENSE-MIT`](LICENSE-MIT) or <http://opensource.org/licenses/MIT>)
 
-## Features
+at your option.
 
-- [x] Remote development support with [GitHub Codespaces](https://github.com/features/codespaces)
-- [x] CI/CD support with [GitHub Actions](https://github.com/features/actions)
-- [x] Running tests and benchmarks
-- [x] Running [Rustfmt](https://github.com/rust-lang/rustfmt) and [Clippy](https://github.com/rust-lang/rust-clippy) for detecting formatting and linting errors, respectively
-- [x] Weekly, midnight scheduled audits of Rust packages (for outdated dependencies, compatible software licenses, and software vulnerabilities) with [`EmbarkStudios/cargo-deny-action`](https://github.com/EmbarkStudios/cargo-deny-action)
+### Contribution
 
-## Configure
-
-| Tool                     | File path                                                | Reference                                                                                                        |
-|--------------------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| GitHub Codespaces        | [`devcontainer.json`](./.devcontainer/devcontainer.json) | [Reference](https://containers.dev/implementors/json_reference/)                                                 |
-| GitHub Actions           | [`.github/workflows`](./.github/workflows)               | [Reference](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)               |
-| Cargo package            | [`Cargo.toml`](crates/pkg1/Cargo.toml)                            | [Reference](https://doc.rust-lang.org/cargo/reference/manifest.html)                                             |
-| Clippy (Rust linter)     | [`.clippy.toml`](./.clippy.toml)                         | [Repository](https://github.com/rust-lang/rust-clippy), [Reference]( https://rust-lang.github.io/rust-clippy/) |
-| Rustfmt (Rust formatter) | [`.rustfmt.toml`](./.rustfmt.toml)                       | [Repository](https://github.com/rust-lang/rustfmt), [Reference](https://rust-lang.github.io/rustfmt/)           |
-| `cargo-deny`             | [`deny.toml`](./deny.toml)                               | [Repository](https://github.com/EmbarkStudios/cargo-deny)                                                        |
-
-## Run scripts locally
-
-| Script      | Command |
-|-------------|---------|
-| Run unit/integration/doc tests | `cargo test` |
-| Run fuzz tests | `cargo fuzz <fuzz-target>` |
-| Run Rustfmt | `cargo fmt` |
-| Run Clippy | `cargo clippy` |
-| Run performance benchmarks | `cargo bench` |
-| Generate API docs for crate | `cargo doc` |
-| Generate mdBook docs for crate | `mdbook build` |
-| Run security audits | `cargo audit`[^cargo-audit] |
-
-[^cargo-audit]: Requires installing [`cargo-audit`](https://crates.io/crates/cargo-audit) locally
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
