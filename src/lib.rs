@@ -34,15 +34,15 @@ let new_vec = string_vec!["Banana", "Apple", "Orange"];
 
 ```rust
 use std::collections::HashMap;
-use string_literals::string_map;
+use string_literals::string_hashmap;
 
 let mut old: HashMap<String, String> = HashMap::new();
 old.insert("Banana".to_owned(), "Good".to_owned());
 old.insert("Apple".to_owned(), "Okay".to_owned());
 
-let new: HashMap<String, String> = string_literals::string_map! {
-	"Banana" => "Good",
-	"Apple" => "Okay",
+let new: HashMap<String, String> = string_literals::string_hashmap! {
+    "Banana" => "Good",
+    "Apple" => "Okay",
 };
 ```
 */
