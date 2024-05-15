@@ -1,0 +1,11 @@
+# .clippy.toml is a configuration file to configure different types of
+# Clippy lints. Please note that through this file:
+#  - it is only possible to configure the behavior of lints
+#  - it is not possible to add new lints, or allow/deny lints
+#
+# To run Clippy, run: `cargo clippy`
+#
+# Further readings:
+#  - Repository: https://github.com/rust-lang/rust-clippy
+#  - Documentation: https://rust-lang.github.io/rust-clippy/master/index.html
+#  - Allowing/denying lints: https://github.com/rust-lang/rust-clippy#allowingdenying-lints

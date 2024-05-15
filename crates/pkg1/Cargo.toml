@@ -1,0 +1,18 @@
+[package]
+name = "rust-template"
+version = "0.1.0"
+authors = [
+	"{{author}} <{{email}}>"
+]
+description = "{{desc}}"
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+rust-version = "1.76.0"
+# keywords = []
+# categories = []
+exclude = [
+	"fuzz",
+	"book",
+	"benches",
+]

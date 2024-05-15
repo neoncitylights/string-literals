@@ -1,0 +1,64 @@
+// For format details: https://aka.ms/devcontainer.json
+// For config options: https://github.com/devcontainers/images/tree/main/src/rust
+{
+	"name": "Rust",
+	"build": {
+		"dockerfile": "./Dockerfile",
+		"context": "."
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": "true",
+			"username": "vscode",
+			"userUid": "1000",
+			"userGid": "1000",
+			"upgradePackages": "true"
+		},
+		"ghcr.io/devcontainers/features/rust:1": "latest",
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest",
+			"ppa": "false"
+		}
+	},
+
+	"customizations": {
+		"vscode": {
+			"settings": {
+				// VS Code don't watch files under ./target
+				"files.watcherExclude": {
+					"**/target/**": true
+				},
+				"rust-analyzer.checkOnSave.command": "clippy"
+			},
+
+			"extensions": [
+				// rust
+				"belfz.search-crates-io",
+				"hbenl.vscode-test-explorer",
+				"rust-lang.rust-analyzer",
+				"serayuzgur.crates",
+				"Swellaby.vscode-rust-test-adapter",
+				"tamasfe.even-better-toml",
+
+				// markdown
+				"mathiassoeholm.markdown-link-updater",
+				"yzhang.markdown-all-in-one"
+			]
+		}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside
+	// the container available locally.
+	// "forwardPorts": [],
+	// "onCreateCommand": "rustup default nightly",
+
+	"postCreateCommand": [
+		"cargo --version",
+		"rustup --version",
+		"rustc --version"
+	],
+
+	// Comment out to connect as root instead.
+	// More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+}

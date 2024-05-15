@@ -1,0 +1,169 @@
+name: CI
+
+# # NOTES
+#
+# ## GitHub Apps
+#
+# To use Codecov (for uploading and analyzing code coverage), you must
+# authenticate the Codecov GitHub App via https://github.com/apps/codecov.
+#
+# ## GitHub Actions
+#
+# This workflow previously used the following GitHub Actions, but no longer does:
+# - `actions-rs/cargo`: See https://github.com/actions-rs/cargo/issues/216 (uses Node.js 12)
+# - `actions-rs/toolchain`: See https://github.com/actions-rs/toolchain/issues/219 (uses Node.js 12)
+# - `actions-rs/tarpaulin`: This seems to be shaky (non-deterministic); it will sometimes fail or pass.
+#
+# For `actions-rs/cargo` and `actions-rs/toolchain`, we instead use
+# `cargo` and `rustup`  directly in the CLI instead respectively.
+#
+# For `actions-rs/tarpaulin`, we instead use `cargo-llvm-codecov` via
+# `taiki-e/install-action@cargo-llvm-cov`.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    name: build (${{ matrix.label }})
+    runs-on: ubuntu-latest
+    strategy:
+      # Documentation:
+      #  - https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
+      #  - https://rust-lang.github.io/rustup/concepts/channels.html
+      #  - https://rust-lang.github.io/rustup/concepts/toolchains.html
+      matrix:
+        include:
+          - label: msrv
+            toolchain: '1.76'
+          - label: stable
+            toolchain: stable
+          - label: beta
+            toolchain: beta
+          - label: nightly
+            toolchain: nightly
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Install Rust (${{ matrix.toolchain }})
+      run: |
+        rustup set profile minimal
+        rustup toolchain install ${{ matrix.toolchain }}
+        rustup override set ${{ matrix.toolchain }}
+    - name: Print environment info
+      run: |
+        rustc --version --verbose
+        cargo --version
+        rustup --version
+    - name: Cache dependencies
+      uses: Swatinem/rust-cache@v2
+      with:
+        shared-key: full-build-cache
+    - name: Build
+      run: cargo build --verbose
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    # `--doctests` flag for `cargo llvm-cov` requires nightly channel
+    # see: https://github.com/taiki-e/cargo-llvm-cov/issues/2
+    - name: Install Rust (Nightly)
+      run: |
+        rustup set profile minimal
+        rustup toolchain install nightly
+        rustup override set nightly
+        rustup component add llvm-tools-preview
+    - name: Print environment info
+      run: |
+        rustc --version --verbose
+        cargo --version
+        rustup --version
+    - name: Cache dependencies
+      uses: Swatinem/rust-cache@v2
+      with:
+        shared-key: full-build-cache
+    - name: Install cargo-llvm-codecov
+      uses: taiki-e/install-action@cargo-llvm-cov
+    - name: Generate code coverage
+      run: |
+        cargo llvm-cov \
+          --all-features \
+          --workspace \
+          --lcov \
+          --output-path lcov.info \
+          --doctests \
+    - name: Upload code coverage
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        verbose: true
+        files: lcov.info
+
+  miri:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Install Rust (nightly)
+      run: |
+        rustup set profile minimal
+        rustup toolchain install nightly
+        rustup override set nightly
+        rustup component add miri
+    - name: Print environment info
+      run: |
+        rustc --version --verbose
+        cargo --version
+        rustup --version
+        cargo miri --version
+    - name: Cache dependencies
+      uses: Swatinem/rust-cache@v2
+      with:
+        shared-key: full-build-cache
+    - name: Setup Miri
+      run: |
+        cargo miri setup
+    - name: Run tests with Miri
+      run: cargo miri test
+
+  codequality-check:
+    name: codequality-check (${{ matrix.tool }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - tool: clippy
+            cmd-cargo: clippy
+            cmd-check: cargo clippy --all-features
+          - tool: rustfmt
+            cmd-cargo: fmt
+            cmd-check: cargo fmt --all -- --check
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Rust
+        run: |
+          rustup set profile minimal
+          rustup toolchain install stable
+          rustup override set stable
+          rustup component add ${{ matrix.tool }}
+      - name: Print environment info
+        run: |
+          rustc --version --verbose
+          cargo --version
+          cargo ${{ matrix.cmd-cargo }} --version
+          rustup --version
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: full-build-cache
+      - name: Run code quality assurance check (${{ matrix.tool }})
+        run: ${{ matrix.cmd-check }}
