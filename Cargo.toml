@@ -1,6 +1,6 @@
 [package]
 name = "string-literals"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Samantha Nguyen <contact@samanthanguyen.me>"]
 description = "Rust macros to more easily create String types"
 repository = "https://github.com/neoncitylights/string-literals"
