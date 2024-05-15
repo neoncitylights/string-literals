@@ -11,7 +11,7 @@ This crate aims to make this slightly more ergonomic; see examples below in the 
 
 ### Strings
 
-```
+```rust
 use string_literals::s;
 
 let old = "Hello, world!".to_owned();

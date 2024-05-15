@@ -25,7 +25,7 @@ cargo add string-literals
 
 ### Strings
 
-```
+```rust
 use string_literals::s;
 
 let old = "Hello, world!".to_owned();
