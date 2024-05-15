@@ -5,12 +5,59 @@
 [![Security audit](https://img.shields.io/github/actions/workflow/status/neoncitylights/string-literals/.github/workflows/main.yml?style=flat-square)](https://github.com/neoncitylights/string-literals/actions/workflows/security-audit.yml)
 [![Codecov](https://img.shields.io/codecov/c/github/neoncitylights/string-literals?style=flat-square&logo=codecov&logoColor=%23fff)](https://codecov.io/gh/neoncitylights/string-literals)
 
-A crate with Rust macros to more easily create String types.
+A very tiny crate with Rust macros to more easily create String types.
+
+When creating string literals in Rust, the given type is `&str`. To create an owned `String` type,
+you either need to:
+
+- pass in the literal to `String::from()`,
+- call `.to_owned()`, or `.to_string()` on the `&str` literal
+
+This crate aims to make this slightly more ergonomic; see examples below in the [Usage](###usage) section.
 
 ## Install
 
 ```shell
 cargo add string-literals
+```
+
+## Usage
+
+### Strings
+
+```
+use string_literals::s;
+
+let old = "Hello, world!".to_owned();
+let new = s!("Hello, world!");
+```
+
+### Arrays, vectors
+
+```rust
+use string_literals::{string_arr, string_vec};
+
+let old_arr: [String; 3] = ["Banana".to_owned(), "Apple".to_owned(), "Orange".to_owned()];
+let new_arr: [String; 3] = string_arr!["Banana", "Apple", "Orange"];
+
+let old_vec = vec!["Banana".to_owned(), "Apple".to_owned(), "Orange".to_owned()];
+let new_vec = string_vec!["Banana", "Apple", "Orange"];
+```
+
+### Hash maps
+
+```rust
+use std::collections::HashMap;
+use string_literals::string_map;
+
+let mut old: HashMap<String, String> = HashMap::new();
+old.insert("Banana".to_owned(), "Good".to_owned());
+old.insert("Apple".to_owned(), "Okay".to_owned());
+
+let new: HashMap<String, String> = string_literals::string_map! {
+	"Banana" => "Good",
+	"Apple" => "Okay",
+};
 ```
 
 ## License
