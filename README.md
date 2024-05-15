@@ -1,8 +1,9 @@
 # string-literals
 
 [![License](https://img.shields.io/badge/License-MIT%20%26%20Apache%202.0-blue?style=flat-square)](#license)
-[![CI](https://img.shields.io/github/deployments/neoncitylights/string-literals/github-pages?label=deploy&style=flat-square)](https://github.com/neoncitylights/string-literals/actions/workflows/main.yml)
-[![Security audit](https://img.shields.io/github/actions/workflow/status/neoncitylights/string-literals/.github/workflows/main.yml?style=flat-square)](https://github.com/neoncitylights/string-literals/actions/workflows/security-audit.yml)
+[![master docs](https://img.shields.io/github/deployments/neoncitylights/string-literals/github-pages?style=flat-square&label=master%20docs)](https://neoncitylights.github.io/string-literals/string_literals/index.html)
+[![docs.rs](https://img.shields.io/docsrs/string-literals/latest?style=flat-square&label=docs.rs)](https://docs.rs/string-literals/)
+[![CI](https://img.shields.io/github/actions/workflow/status/neoncitylights/string-literals/.github/workflows/main.yml?style=flat-square)](https://github.com/neoncitylights/string-literals/actions/workflows/main.yml)
 [![Codecov](https://img.shields.io/codecov/c/github/neoncitylights/string-literals?style=flat-square&logo=codecov&logoColor=%23fff)](https://codecov.io/gh/neoncitylights/string-literals)
 
 A very tiny crate with Rust macros to more easily create String types.

@@ -1,5 +1,5 @@
 # Changelog
 
-## 1.0.0 (2024-05-14)
+## 1.0.0 (2024-05-15)
 
 - Initial release of the `string-literals` library
