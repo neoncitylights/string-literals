@@ -54,7 +54,7 @@ let mut old: HashMap<String, String> = HashMap::new();
 old.insert("Banana".to_owned(), "Good".to_owned());
 old.insert("Apple".to_owned(), "Okay".to_owned());
 
-let new: HashMap<String, String> = string_literals::string_hashmap! {
+let new: HashMap<String, String> = string_hashmap! {
     "Banana" => "Good",
     "Apple" => "Okay",
 };
