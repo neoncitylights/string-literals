@@ -13,7 +13,7 @@ you either need to:
 - pass in the literal to `String::from()`,
 - call `.to_owned()`, or `.to_string()` on the `&str` literal
 
-This crate aims to make this slightly more ergonomic; see examples below in the [Usage](###usage) section.
+This crate aims to make this slightly more ergonomic; see examples below in the [Usage](#Usage) section.
 
 ## Install
 
