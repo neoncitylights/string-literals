@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":["s","string_arr","string_hashmap","string_vec"]};
