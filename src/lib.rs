@@ -34,9 +34,14 @@ let new_vec = string_vec!["Banana", "Apple", "Orange"];
 use std::collections::HashMap;
 use string_literals::string_hashmap;
 
-let mut old: HashMap<String, String> = HashMap::new();
-old.insert("Banana".to_owned(), "Good".to_owned());
-old.insert("Apple".to_owned(), "Okay".to_owned());
+let mut old1: HashMap<String, String> = HashMap::new();
+old1.insert("Banana".to_owned(), "Good".to_owned());
+old1.insert("Apple".to_owned(), "Okay".to_owned());
+
+let old2: HashMap<String, String> = HashMap::from([
+    ("Banana".to_owned(), "Good".to_owned()),
+    ("Apple".to_owned(), "Okay".to_owned()),
+]);
 
 let new: HashMap<String, String> = string_hashmap! {
     "Banana" => "Good",
@@ -171,16 +176,11 @@ macro_rules! string_vec {
 #[macro_export]
 macro_rules! string_hashmap {
 	() => {
-		{
-			let mut _map = ::std::collections::HashMap::new();
-			_map
-		}
+		::std::collections::HashMap::new()
 	};
 	($($k:expr => $v:expr),+ $(,)?) => {
-		{
-			let mut _map = ::std::collections::HashMap::new();
-			$(_map.insert($k.to_owned(), $v.to_owned());)*
-			_map
-		}
+		::std::collections::HashMap::from([
+			$(($k.to_owned(), $v.to_owned())),+
+		])
 	};
 }

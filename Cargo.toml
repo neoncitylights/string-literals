@@ -1,6 +1,6 @@
 [package]
 name = "string-literals"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Samantha Nguyen <contact@samanthanguyen.me>"]
 description = "Rust macros to more easily create String types"
 repository = "https://github.com/neoncitylights/string-literals"
@@ -11,3 +11,6 @@ rust-version = "1.56.0"
 keywords = ["string", "macro"]
 categories = ["development-tools"]
 include = ["src", "LICENSE-APACHE", "LICENSE-MIT"]
+
+[badges]
+maintenance.status = "as-is"
