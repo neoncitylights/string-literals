@@ -1,30 +1,66 @@
-name: Security audit
+name: rustdoc
+
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/security-audit.yml'
-      - '**/Cargo.toml'
-      - '**/Cargo.lock'
   push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/security-audit.yml'
-      - '**/Cargo.toml'
-      - '**/Cargo.lock'
-  schedule:
-    # Run once a week on Monday at 00:00 (12:00AM or Midnight, UTC)
-    # See POSIX cron syntax visualized at https://crontab.guru/#0_0_*_*_1
-    # GitHub Docs: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onschedule
-    # Cron syntax reference: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
-    - cron: '0 0 * * 1'
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
+# Allow only one concurrent deployment, skipping runs queued between
+# the run in-progress and latest queued. However, do NOT cancel in-progress
+# runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# GitHub Pages requires a root `index.html` to function properly.
+# This job does a few things to make sure this works:
+# - Runs the Nightly channel of Rust
+# - Passes the `--enable-index-page` flag to Rustdoc; since this
+#   is an unstable feature, this requires Nightly Rust and also
+#   passing the `-Zunstable-options` flag
+#
+# See:
+# - https://doc.rust-lang.org/rustdoc/unstable-features.html#--enable-index-page-generate-a-default-index-page-for-docs
 jobs:
-  audit:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: rustsec/audit-check@v2.0.0
+      - name: Install Rust
+        run: |
+          rustup set profile minimal
+          rustup toolchain install nightly
+          rustup override set nightly
+      - name: Compile crates
+        run: cargo build --verbose
+      - name: Build documentation
+        run: cargo doc --workspace --no-deps --all-features
+        env:
+          RUSTDOCFLAGS: --enable-index-page -Zunstable-options
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      # https://github.com/actions/deploy-pages/issues/188#issuecomment-1597651901
+      - name: Remove build files in /target/doc with incorrect permissions
+        run: rm -f ./target/doc/.lock
+      - name: Print build files in /target/doc
+        run: find ./target/doc -exec echo {} \;
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          path: './target/doc'
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name != 'pull_request'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
