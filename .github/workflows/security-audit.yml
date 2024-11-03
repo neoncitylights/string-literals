@@ -2,12 +2,14 @@ name: Security audit
 on:
   pull_request:
     paths:
+      - '.github/workflows/security-audit.yml'
       - '**/Cargo.toml'
       - '**/Cargo.lock'
   push:
     branches:
       - main
     paths:
+      - '.github/workflows/security-audit.yml'
       - '**/Cargo.toml'
       - '**/Cargo.lock'
   schedule:
@@ -21,17 +23,8 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        checks:
-          - advisories
-          - bans licenses sources
-
-    # Prevent sudden announcement of a new advisory from failing ci:
-    continue-on-error: ${{ matrix.checks == 'advisories' }}
-
     steps:
-    - uses: actions/checkout@v4
-    - uses: EmbarkStudios/cargo-deny-action@v1
-      with:
-        command: check ${{ matrix.checks }}
+      - uses: actions/checkout@v4
+      - uses: rustsec/audit-check@v2.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
