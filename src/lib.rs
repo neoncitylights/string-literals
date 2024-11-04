@@ -1,54 +1,52 @@
-/*!
-A very tiny crate with Rust macros to more easily create String types.
-
-When creating string literals in Rust, the given type is `&str`. To create an owned `String` type,
-you either need to:
-
-- pass in the literal to `String::from()`,
-- call `.to_owned()`, or `.to_string()` on the `&str` literal
-
-### Strings
-
-```rust
-use string_literals::s;
-
-let old = "Hello, world!".to_owned();
-let new = s!("Hello, world!");
-```
-
-### Arrays, vectors
-
-```rust
-use string_literals::{string_arr, string_vec};
-
-let old_arr: [String; 3] = ["Banana".to_owned(), "Apple".to_owned(), "Orange".to_owned()];
-let new_arr: [String; 3] = string_arr!["Banana", "Apple", "Orange"];
-
-let old_vec = vec!["Banana".to_owned(), "Apple".to_owned(), "Orange".to_owned()];
-let new_vec = string_vec!["Banana", "Apple", "Orange"];
-```
-
-### Hash maps
-
-```rust
-use std::collections::HashMap;
-use string_literals::string_hashmap;
-
-let mut old1: HashMap<String, String> = HashMap::new();
-old1.insert("Banana".to_owned(), "Good".to_owned());
-old1.insert("Apple".to_owned(), "Okay".to_owned());
-
-let old2: HashMap<String, String> = HashMap::from([
-    ("Banana".to_owned(), "Good".to_owned()),
-    ("Apple".to_owned(), "Okay".to_owned()),
-]);
-
-let new: HashMap<String, String> = string_hashmap! {
-    "Banana" => "Good",
-    "Apple" => "Okay",
-};
-```
-*/
+//! A very tiny crate with Rust macros to more easily create String types.
+//!
+//! When creating string literals in Rust, the given type is `&str`. To create an owned `String` type,
+//! you either need to:
+//!
+//! - pass in the literal to `String::from()`,
+//! - call `.to_owned()`, or `.to_string()` on the `&str` literal
+//!
+//! ### Strings
+//!
+//! ```rust
+//! use string_literals::s;
+//!
+//! let old = "Hello, world!".to_owned();
+//! let new = s!("Hello, world!");
+//! ```
+//!
+//! ### Arrays, vectors
+//!
+//! ```rust
+//! use string_literals::{string_arr, string_vec};
+//!
+//! let old_arr: [String; 3] = ["Banana".to_owned(), "Apple".to_owned(), "Orange".to_owned()];
+//! let new_arr: [String; 3] = string_arr!["Banana", "Apple", "Orange"];
+//!
+//! let old_vec = vec!["Banana".to_owned(), "Apple".to_owned(), "Orange".to_owned()];
+//! let new_vec = string_vec!["Banana", "Apple", "Orange"];
+//! ```
+//!
+//! ### Hash maps
+//!
+//! ```rust
+//! use std::collections::HashMap;
+//! use string_literals::string_hashmap;
+//!
+//! let mut old1: HashMap<String, String> = HashMap::new();
+//! old1.insert("Banana".to_owned(), "Good".to_owned());
+//! old1.insert("Apple".to_owned(), "Okay".to_owned());
+//!
+//! let old2: HashMap<String, String> = HashMap::from([
+//!     ("Banana".to_owned(), "Good".to_owned()),
+//!     ("Apple".to_owned(), "Okay".to_owned()),
+//! ]);
+//!
+//! let new: HashMap<String, String> = string_hashmap! {
+//!     "Banana" => "Good",
+//!     "Apple" => "Okay",
+//! };
+//! ```
 
 /// Create a [`String`] literal
 ///
