@@ -8,12 +8,9 @@ updates:
   - package-ecosystem: "cargo"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
-      prefix: "chore(deps/cargo):"
-    labels:
-      - "t-dependencies"
-      - "pkg-cargo"
+      prefix: "deps(cargo):"
     open-pull-requests-limit: 4
 
   - package-ecosystem: "github-actions"
@@ -21,8 +18,5 @@ updates:
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "chore(deps/actions):"
-    labels:
-      - "t-dependencies"
-      - "pkg-gh-actions"
+      prefix: "deps(gha):"
     open-pull-requests-limit: 4
