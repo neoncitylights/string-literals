@@ -47,7 +47,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Install Rust (${{ matrix.toolchain }})
       run: |
         rustup set profile minimal
@@ -71,7 +71,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     # `--doctests` flag for `cargo llvm-cov` requires nightly channel
     # see: https://github.com/taiki-e/cargo-llvm-cov/issues/2
     - name: Install Rust (Nightly)
@@ -111,7 +111,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Install Rust (nightly)
       run: |
         rustup set profile minimal
@@ -148,7 +148,7 @@ jobs:
             cmd-check: cargo fmt --all -- --check
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install Rust
         run: |
           rustup set profile minimal
@@ -172,7 +172,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install Rust
         run: |
           rustup set profile minimal
