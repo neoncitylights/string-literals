@@ -47,7 +47,7 @@ jobs:
       - name: Print build files in /target/doc
         run: find ./target/doc -exec echo {} \;
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: './target/doc'
   deploy:
